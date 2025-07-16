@@ -2,7 +2,6 @@ import os
 import json
 import requests
 from datetime import datetime, timedelta
-
 from services.api import get_categories
 from services.ia import get_description
 from services.images import get_profile_image, get_post_image
@@ -15,7 +14,7 @@ from generators.posts import create_post_and_publish
 
 LAST_RUN_FILE = "last_run.json"
 TASK_NAME = "create_user"
-INTERVAL = timedelta(hours=1)
+INTERVAL = timedelta(hours=10)
 
 def notify_telegram(message):
     url = f"https://api.telegram.org/bot{TOKEN_TELEGRAM}/sendMessage"
