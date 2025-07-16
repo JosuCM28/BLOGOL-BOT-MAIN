@@ -1,9 +1,9 @@
-name: Ejecutar bot cada 20 minutos
+name: Ejecutar bot cada 5 minutos
 
 on:
   schedule:
-    - cron: "*/4 * * * *"  # ⏰ Cada 20 minutos
-  workflow_dispatch:        # También permite correrlo manualmente
+    - cron: "*/5 * * * *" 
+  workflow_dispatch:        
 
 jobs:
   ejecutar-bot:
