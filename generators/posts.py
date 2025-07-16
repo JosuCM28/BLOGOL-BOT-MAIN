@@ -20,7 +20,11 @@ def create_post_and_publish(user):
     content = result["content"]
     prompts = result["prompts"]
     
-    images = [get_post_image(p) for p in prompts]
+    images = [img for p in prompts if (img := get_post_image(p))]
+    if not images:
+        print(f"⚠️ No se generaron imágenes para {user['email']}. Post cancelado.")
+        return
+
     delta = convert_to_delta(content, images)
     
     post_data = {

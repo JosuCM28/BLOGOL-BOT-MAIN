@@ -18,7 +18,9 @@ def generate_post_schedule():
     today = now.date()
 
     times = []
-    while len(times) < 10:
+    num_posts = random.randint(10, 15)
+
+    while len(times) < num_posts:
         random_hour = random.randint(start_hour, end_hour - 1)
         random_minute = random.randint(0, 59)
         scheduled_time = datetime.combine(today, datetime.min.time()) + timedelta(hours=random_hour, minutes=random_minute)
