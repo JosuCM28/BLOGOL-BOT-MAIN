@@ -1,5 +1,7 @@
 import requests
+from datetime import datetime, timedelta
 import random
+import json
 from faker import Faker
 from config.settings import API_BASE_URL, build_headers
 from services.ia import get_description
@@ -8,6 +10,25 @@ from generators.posts import create_post_and_publish
 
 faker = Faker('es_ES')
 user_tokens = {}
+
+def generate_post_schedule():
+    start_hour = 6
+    end_hour = 22
+    now = datetime.now()
+    today = now.date()
+
+    times = []
+    while len(times) < 10:
+        random_hour = random.randint(start_hour, end_hour - 1)
+        random_minute = random.randint(0, 59)
+        scheduled_time = datetime.combine(today, datetime.min.time()) + timedelta(hours=random_hour, minutes=random_minute)
+
+        if scheduled_time > now:
+            times.append(scheduled_time.isoformat())
+
+    times.sort()
+    return times
+
 
 def create_user():
     sex = random.choice(["female", "male"])
@@ -40,11 +61,21 @@ def create_user():
     
     update_profile(user_tokens[email]["token"], user_tokens[email]["id"], name, last_name, email, bio, image)
     
-    for _ in range(10):
-        try:
-            create_post_and_publish(user_tokens[email])
-        except Exception as e:
-            continue
+    post_schedule = generate_post_schedule()
+
+    with open(f"post_schedule_{email}.json", "w") as f:
+        json.dump(post_schedule, f)
+
+    return {
+        "id": user_tokens[email]["id"],
+        "token": user_tokens[email]["token"],
+        "name": name,
+        "last_name": last_name,
+        "email": email,
+        "bio": bio,
+        "image": image
+    }
+
 
     
     
