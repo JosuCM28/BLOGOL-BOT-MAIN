@@ -2,7 +2,7 @@ name: Ejecutar bot cada 5 minutos
 
 on:
   schedule:
-    - cron: "*/6 * * * *" 
+    - cron: "*/5 * * * *" 
   push:
     branches:
       - main
@@ -16,6 +16,7 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true
 
     steps:
+    
       - name: 🔄 Clonar el repositorio
         uses: actions/checkout@v3
 
@@ -37,7 +38,8 @@ jobs:
           echo "CHAT_ID_TELEGRAM=${{ secrets.CHAT_ID_TELEGRAM }}" >> .env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
           echo "UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }}" >> .env
-
+          cat .env  # Para depuración
+          
       - name: 🚀 Ejecutar el bot
         run: |
           echo "🕒 Fecha y hora actuales del runner:"
