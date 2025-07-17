@@ -15,7 +15,7 @@ from config.settings import TOKEN_TELEGRAM, CHAT_ID_TELEGRAM
 
 LAST_RUN_FILE = "last_run.json"
 TASK_NAME = "create_user"
-INTERVAL = timedelta(hours=1)
+INTERVAL = timedelta(hours=20)
 
 def notify_telegram(message):
     url = f"https://api.telegram.org/bot{TOKEN_TELEGRAM}/sendMessage"
